@@ -15,11 +15,10 @@ return new class extends Migration
   {
     Schema::create('products_descriptions', function (Blueprint $table) {
       $table->foreignId('product_id')
-        ->references('product_id')
-        ->on('products')
+        ->constrained()
         ->onUpdate('cascade')
         ->onDelete('cascade');
-      $table->foreignId('language_id')->default(1);
+      $table->foreignId('language_id')->constrained();
       $table->string('name');
       $table->text('description');
       $table->timestamps();

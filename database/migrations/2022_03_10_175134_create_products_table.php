@@ -14,7 +14,7 @@ return new class extends Migration
   public function up()
   {
     Schema::create('products', function (Blueprint $table) {
-      $table->id('product_id');
+      $table->id();
       $table->string('model')->nullable();
       $table->string('sku')->nullable();
       $table->string('upc')->nullable();
@@ -24,20 +24,19 @@ return new class extends Migration
       $table->string('mpn')->nullable();
       $table->string('location')->nullable();
       $table->integer('quantity')->nullable();
-      $table->foreignId('stock_status_id')->nullable();
+      $table->foreignId('stock_status_id')->constrained();
       $table->string('image')->nullable();
-      $table->foreignId('manufacturer_id')->nullable();
+      $table->foreignId('manufacturer_id')->constrained()->nullable();
       $table->boolean('shipping')->default(1);
-      $table->decimal('price', $precision = 15, $scale = 4)->default(0.0000);
+      $table->decimal('price', 15, 4)->default(0.0000);
       $table->integer('points')->nullable();
-      $table->foreignId('tax_class_id');
-      $table->timestamp('date_available', $precision = 0)->default(now());
-      $table->decimal('weight', $precision = 15, $scale = 4)->default(0.00000000);
-      $table->foreignId('weight_class_id');
-      $table->decimal('length', $precision = 15, $scale = 4)->default(0.00000000);
-      $table->decimal('width', $precision = 15, $scale = 4)->default(0.00000000);
-      $table->decimal('height', $precision = 15, $scale = 4)->default(0.00000000);
-      $table->foreignId('length_class_id');
+      $table->timestamp('date_available')->default(now());
+      $table->decimal('weight', 15, 8)->default(0.00000000);
+      $table->foreignId('weight_id')->constrained();
+      $table->decimal('length', 15, 8)->default(0.00000000);
+      $table->decimal('width', 15, 8)->default(0.00000000);
+      $table->decimal('height', 15, 8)->default(0.00000000);
+      $table->foreignId('length_id')->constrained();
       $table->boolean('subtract')->default(1);
       $table->integer('minimum')->default(1);
       $table->integer('sort_order')->default(0);
