@@ -14,7 +14,7 @@ return new class extends Migration
   public function up()
   {
     Schema::create('seo', function (Blueprint $table) {
-      $table->id('seo_id');
+      $table->id();
       $table->string('type');
       $table->foreignId('foreign_id');
       $table->foreignId('language_id');
