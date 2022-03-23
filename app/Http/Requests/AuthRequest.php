@@ -28,13 +28,4 @@ class AuthRequest extends FormRequest
       "password" => ["required"],
     ];
   }
-
-  public function messages()
-  {
-    return [
-      "email.required" => "Por favor preencha o campo e-mail.",
-      "email.email" => "Por favor digite um e-mail válido.",
-      "password.required" => "Por favor preencha o campo senha.",
-    ];
-  }
 }
