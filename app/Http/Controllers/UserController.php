@@ -25,15 +25,7 @@ class UserController extends Controller
    */
   public function store(Request $request)
   {
-    try {
-      User::create([
-        "name" => "Admin",
-        "email" => "admin@teccompany.com.br",
-        "password" => bcrypt("secret"),
-      ]);
-    } catch (\Throwable $th) {
-      throw $th;
-    }
+    //
   }
 
   /**
