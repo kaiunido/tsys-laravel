@@ -15,7 +15,8 @@ return new class extends Migration
   {
     Schema::create('products_descriptions', function (Blueprint $table) {
       $table->foreignId('product_id')
-        ->constrained('products')
+        ->references('product_id')
+        ->on('products')
         ->onUpdate('cascade')
         ->onDelete('cascade');
       $table->foreignId('language_id')->default(1);
