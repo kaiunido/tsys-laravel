@@ -16,8 +16,8 @@ return new class extends Migration
     Schema::create('manufacturers', function (Blueprint $table) {
       $table->id();
       $table->string('name');
-      $table->string('image');
-      $table->integer('sort_order');
+      $table->string('image')->nullable();
+      $table->integer('sort_order')->default(0);
       $table->timestamps();
     });
   }
