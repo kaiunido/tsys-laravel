@@ -15,8 +15,8 @@ return new class extends Migration
   {
     Schema::create('seo', function (Blueprint $table) {
       $table->id();
-      $table->string('type');
-      $table->foreignId('foreign_id');
+      $table->string('searchable_type');
+      $table->foreignId('searchable_id');
       $table->foreignId('language_id');
       $table->string('meta_title');
       $table->string('meta_description');
