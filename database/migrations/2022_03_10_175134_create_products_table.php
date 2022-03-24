@@ -20,7 +20,7 @@ return new class extends Migration
       $table->string('upc')->nullable();
       $table->string('ean')->nullable();
       $table->string('jan')->nullable();
-      $table->string('isbn')->nullable();
+      $table->string('isbn')->unique()->nullable();
       $table->string('mpn')->nullable();
       $table->string('location')->nullable();
       $table->integer('quantity')->nullable();
