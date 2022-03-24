@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
       StockStatusSeeder::class,
       WeightsSeeder::class,
       LengthsSeeder::class,
+      ManufacturerSeeder::class,
+      ProductSeeder::class,
     ]);
   }
 }
