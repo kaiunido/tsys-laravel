@@ -9,6 +9,11 @@ class ProductDescription extends Model
 {
   use HasFactory;
 
+  protected $hidden = [
+    'product_id',
+    'language_id'
+  ];
+
   /**
    * Pega o produto que possui a descrição.
    */
