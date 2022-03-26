@@ -67,7 +67,7 @@ class ProductController extends Controller
    */
   public function show($id)
   {
-    //
+    return response()->json(Product::with('description')->find($id));
   }
 
   /**
@@ -90,6 +90,11 @@ class ProductController extends Controller
    */
   public function destroy($id)
   {
-    //
+    try {
+      $deleted = Product::destroy($id);
+      return response()->json($deleted);
+    } catch (\Throwable $th) {
+      return response()->json($th);
+    }
   }
 }
