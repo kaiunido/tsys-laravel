@@ -18,23 +18,32 @@ class ProductController extends Controller
   {
     $products = new Product();
     $params = $request->safe()->all();
+    $products = $products->select(
+      'id',
+      'product_descriptions.name',
+      'isbn',
+      'price',
+      'quantity',
+      'status'
+    )->join('product_descriptions', 'product_id', 'id');
 
-    if ($params) {
-      $productsResult = $products->select(
-        'id',
-        'product_descriptions.name',
-        'isbn',
-        'price',
-        'quantity',
-        'status'
-      )->join('product_descriptions', 'product_id', 'id')
-        ->where('status', '=', (int) $params['status'])
-        ->where(function ($query) use ($params) {
-          $query->orWhere('isbn', 'like', "%{$params['search']}%");
-          $query->orWhere('name', 'like', "%{$params['search']}%");
-        })
-        ->paginate($params['limit']);
+    if ($params['status'] >= 0 && $params['status'] <= 1) {
+      $products = $products->where('status', '=', $params['status']);
     }
+
+    if ($params['search']) {
+      $products = $products->where(function ($query) use ($params) {
+        $query->orWhere('isbn', 'like', "%{$params['search']}%");
+        $query->orWhere('name', 'like', "%{$params['search']}%");
+      });
+    }
+
+    if ($params['limit'] > 0) {
+      $productsResult = $products->paginate($params['limit']);
+    } else {
+      $productsResult = $products->get();
+    }
+
 
     return response()->json($productsResult);
   }
