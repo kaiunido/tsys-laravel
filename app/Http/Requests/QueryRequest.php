@@ -24,9 +24,9 @@ class QueryRequest extends FormRequest
   public function rules()
   {
     return [
-      'limit' => '',
-      'page' => '',
-      'search' => '',
+      'limit' => 'integer',
+      'page' => 'integer',
+      'search' => 'nullable|string',
       'status' => 'integer'
     ];
   }
