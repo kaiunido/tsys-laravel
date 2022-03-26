@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::controller(App\Http\Controllers\AuthController::class)->group(function () {
-  Route::post("user/login", "login");
+  Route::post("usuario/login", "login");
 });
 
 /*Route::prefix('product')->group(function () {
