@@ -9,9 +9,16 @@ class ProductDescription extends Model
 {
   use HasFactory;
 
-  protected $hidden = [
+  /**
+   * Atributos que são atribuíveis em massa.
+   *
+   * @var array<int, string>
+   */
+  protected $fillable = [
     'product_id',
-    'language_id'
+    'language_id',
+    'name',
+    'description',
   ];
 
   /**
@@ -20,5 +27,13 @@ class ProductDescription extends Model
   public function product()
   {
     return $this->belongsTo(Product::class);
+  }
+
+  /**
+   * Relacionamentos com idiomas
+   */
+  public function language()
+  {
+    return $this->belongsTo(Language::class);
   }
 }

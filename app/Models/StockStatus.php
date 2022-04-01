@@ -7,5 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class StockStatus extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  /**
+   * Atributos que são atribuíveis em massa.
+   *
+   * @var array<int, string>
+   */
+  protected $fillable = [
+    'language_id',
+    'name',
+  ];
+
+  /**
+   * Relacionamento com produto
+   */
+  public function product()
+  {
+    $this->hasMany(Product::class);
+  }
 }

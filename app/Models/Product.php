@@ -19,43 +19,54 @@ class Product extends Model
   /**
    * Atributos que são atribuíveis em massa.
    *
-   * @var array
+   * @var array<int, string>
    */
   protected $fillable = [
     'model',
     'sku',
-    'upc',
-    'ean',
-    'jan',
-    'isbn',
-    'mpn',
+    'isbn13',
+    'condition',
     'location',
-    'quantity',
     'stock_status_id',
     'image',
     'manufacturer_id',
     'shipping',
-    'price',
     'points',
-    'tax_class_id',
     'date_available',
     'weight',
-    'weight_class_id',
+    'weight_id',
     'length',
     'width',
     'height',
-    'length_class_id',
+    'length_id',
     'subtract',
     'minimum',
     'sort_order',
     'status',
+    'viewed',
   ];
 
   /**
-   * Faz os relacionamento de um para um com a descrição do produto.
+   * Relacionamento com a descrição do produto.
    */
   public function description()
   {
-    return $this->hasOne(ProductDescription::class);
+    return $this->hasMany(ProductDescription::class);
+  }
+
+  /**
+   * Relacionamento com fabricante
+   */
+  public function manufacturer()
+  {
+    $this->belongsTo(Manufacturer::class);
+  }
+
+  /**
+   * Relacionamento com situação do stock
+   */
+  public function stockStatus()
+  {
+    $this->belongsTo(StockStatus::class);
   }
 }
