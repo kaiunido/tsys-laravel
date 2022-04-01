@@ -14,8 +14,8 @@ return new class extends Migration
   public function up()
   {
     Schema::create('lengths_descriptions', function (Blueprint $table) {
-      $table->foreignId('length_id')->constrained();
-      $table->foreignId('language_id')->constrained();
+      $table->foreignId('length_id');
+      $table->foreignId('language_id');
       $table->string('name');
       $table->string('unit', 3);
       $table->timestamps();
