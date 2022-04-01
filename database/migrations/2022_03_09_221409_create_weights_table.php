@@ -17,6 +17,7 @@ return new class extends Migration
       $table->id();
       $table->decimal('value', 15, 8);
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 

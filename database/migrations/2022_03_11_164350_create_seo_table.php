@@ -24,6 +24,7 @@ return new class extends Migration
       $table->string('query');
       $table->string('meta_url');
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 

@@ -43,6 +43,7 @@ return new class extends Migration
       $table->boolean('status')->default(0);
       $table->integer('viewed')->default(0);
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 

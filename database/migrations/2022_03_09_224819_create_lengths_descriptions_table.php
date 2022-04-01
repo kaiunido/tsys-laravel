@@ -19,6 +19,7 @@ return new class extends Migration
       $table->string('name');
       $table->string('unit', 3);
       $table->timestamps();
+      $table->softDeletes();
 
       $table->unique(['length_id', 'language_id']);
     });
