@@ -59,14 +59,14 @@ class Product extends Model
    */
   public function manufacturer()
   {
-    $this->belongsTo(Manufacturer::class);
+    return $this->belongsTo(Manufacturer::class);
   }
 
   /**
-   * Relacionamento com situação do stock
+   * Relacionamento com situação do estoque
    */
   public function stockStatus()
   {
-    $this->belongsTo(StockStatus::class);
+    return $this->belongsTo(StockStatus::class);
   }
 }
