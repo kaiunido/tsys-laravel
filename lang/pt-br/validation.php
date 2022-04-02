@@ -30,7 +30,7 @@ return [
     'numeric' => 'The :attribute must be between :min and :max.',
     'string' => 'The :attribute must be between :min and :max characters.',
   ],
-  'boolean' => 'The :attribute field must be true or false.',
+  'boolean' => 'O campo :attribute precisa de um valor válido.',
   'confirmed' => 'The :attribute confirmation does not match.',
   'current_password' => 'The password is incorrect.',
   'date' => 'The :attribute is not a valid date.',
@@ -99,7 +99,7 @@ return [
   'multiple_of' => 'The :attribute must be a multiple of :value.',
   'not_in' => 'The selected :attribute is invalid.',
   'not_regex' => 'The :attribute format is invalid.',
-  'numeric' => 'The :attribute must be a number.',
+  'numeric' => 'O :attribute precisa ser um número.',
   'password' => 'The password is incorrect.',
   'present' => 'The :attribute field must be present.',
   'prohibited' => 'The :attribute field is prohibited.',
@@ -117,17 +117,17 @@ return [
   'required_without_all' => 'The :attribute field is required when none of :values are present.',
   'same' => 'The :attribute and :other must match.',
   'size' => [
-    'array' => 'The :attribute must contain :size items.',
-    'file' => 'The :attribute must be :size kilobytes.',
-    'numeric' => 'The :attribute must be :size.',
-    'string' => 'The :attribute must be :size characters.',
+    'array' => 'O campo :attribute precisa conter :size itens.',
+    'file' => 'O campo :attribute precisa ser de :size kilobytes.',
+    'numeric' => 'O campo :attribute precisa ser :size.',
+    'string' => 'O campo :attribute precisa ter :size characteres.',
   ],
   'starts_with' => 'The :attribute must start with one of the following: :values.',
-  'string' => 'The :attribute must be a string.',
+  'string' => 'O campo :attribute precisa ser do tipo texto.',
   'timezone' => 'The :attribute must be a valid timezone.',
-  'unique' => 'The :attribute has already been taken.',
+  'unique' => 'O :attribute já está sendo usado.',
   'uploaded' => 'The :attribute failed to upload.',
-  'url' => 'The :attribute must be a valid URL.',
+  'url' => 'O campo :attribute precisa ser uma URL válida.',
   'uuid' => 'The :attribute must be a valid UUID.',
 
   /*
@@ -159,7 +159,10 @@ return [
     */
 
   'attributes' => [
-    "password" => "senha",
+    'password' => 'senha',
+    'product' => [
+      'isbn13' => 'ISBN13'
+    ]
   ],
 
 ];
