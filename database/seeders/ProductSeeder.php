@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\ProductDescription;
+use App\Models\Seo;
+use App\Models\Stock;
 
 class ProductSeeder extends Seeder
 {
@@ -16,9 +18,12 @@ class ProductSeeder extends Seeder
    */
   public function run()
   {
-    $product = Product::factory()
-      ->hasDescription(ProductDescription::factory())
-      ->count(50)
-      ->create();
+    for ($i = 0; $i < 50; $i++) {
+      Product::factory(1)
+        ->hasDescription(1)
+        ->hasSeo(1)
+        ->hasStock(random_int(1, 4))
+        ->create();
+    }
   }
 }
