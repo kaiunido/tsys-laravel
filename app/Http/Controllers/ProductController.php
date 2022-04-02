@@ -26,13 +26,14 @@ class ProductController extends Controller
     $products = new Product();
     $params = $request->safe()->all();
     $products = $products->select(
-      'id',
+      'products.id',
       'product_descriptions.name',
-      'isbn',
-      'price',
-      'quantity',
+      'isbn13',
+      DB::Raw('(SELECT price FROM stocks WHERE product_id = products.id ORDER BY stocks.id DESC LIMIT 1) AS price'),
+      DB::Raw('(SUM(quantity) - SUM(quantity_sold)) as quantity'),
       'status'
-    )->join('product_descriptions', 'product_id', 'id');
+    )->join('product_descriptions', 'product_descriptions.product_id', 'products.id')
+      ->join('stocks', 'stocks.product_id', 'products.id');
 
     if ($params['status'] >= 0 && $params['status'] <= 1) {
       $products = $products->where('status', '=', $params['status']);
@@ -44,6 +45,13 @@ class ProductController extends Controller
         $query->orWhere('name', 'like', "%{$params['search']}%");
       });
     }
+
+    $products->groupBy(
+      'products.id',
+      'product_descriptions.name',
+      'isbn13',
+      'status'
+    );
 
     if ($params['limit'] > 0) {
       $productsResult = $products->paginate($params['limit']);
