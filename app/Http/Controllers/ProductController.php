@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\QueryRequest;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductDescriptionRequest;
@@ -111,13 +113,42 @@ class ProductController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy($id, $force = false)
   {
     try {
-      $deleted = Product::destroy($id);
-      return response()->json($deleted);
-    } catch (\Throwable $th) {
-      return response()->json($th);
+      if (!$force) {
+        $product = Product::findOrFail($id);
+        $method = 'delete';
+        $message = __('product.softdeleted', ['id' => $id]);
+      } else {
+        $product = Product::withTrashed()->findOrFail($id);
+        $method = 'forceDelete';
+        $message = __('product.deleted', ['id' => $id]);
+      }
+
+      DB::transaction(function () use ($product, $method) {
+        $product->stock()->$method();
+        $product->seo()->$method();
+        $product->description()->$method();
+        $product->$method();
+      }, 5);
+
+      return response([
+        'status' => 200,
+        'message' => $message
+      ], Response::HTTP_OK);
+    } catch (ModelNotFoundException $ex) {
+      return response([
+        'status' => 404,
+        'message' => __('product.not_found', ['id' => $id]),
+        'data' => $ex
+      ], Response::HTTP_NOT_FOUND);
+    } catch (\Exception $ex) {
+      return response([
+        'status' => 500,
+        'message' => __('general.unknown_error'),
+        'data' => $ex
+      ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
   }
 }
