@@ -26,7 +26,7 @@ class LengthDescription extends Model
    */
   public function length()
   {
-    $this->belongsTo(Length::class);
+    return $this->belongsTo(Length::class);
   }
 
   /**
@@ -34,6 +34,6 @@ class LengthDescription extends Model
    */
   public function language()
   {
-    $this->belongsTo(Language::class);
+    return $this->belongsTo(Language::class);
   }
 }

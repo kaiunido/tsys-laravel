@@ -23,6 +23,6 @@ class Length extends Model
    */
   public function description()
   {
-    $this->hasMany(LengthDescription::class);
+    return $this->hasMany(LengthDescription::class);
   }
 }

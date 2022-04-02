@@ -26,7 +26,7 @@ class WeightDescription extends Model
    */
   public function weight()
   {
-    $this->belongsTo(Weight::class);
+    return $this->belongsTo(Weight::class);
   }
 
   /**
@@ -34,6 +34,6 @@ class WeightDescription extends Model
    */
   public function language()
   {
-    $this->belongsTo(Language::class);
+    return $this->belongsTo(Language::class);
   }
 }

@@ -23,6 +23,6 @@ class Weight extends Model
    */
   public function description()
   {
-    $this->hasMany(WeightDescription::class);
+    return $this->hasMany(WeightDescription::class);
   }
 }
