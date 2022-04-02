@@ -41,7 +41,7 @@ class ProductController extends Controller
 
     if ($params['search']) {
       $products = $products->where(function ($query) use ($params) {
-        $query->orWhere('isbn', 'like', "%{$params['search']}%");
+        $query->orWhere('isbn13', 'like', "%{$params['search']}%");
         $query->orWhere('name', 'like', "%{$params['search']}%");
       });
     }
