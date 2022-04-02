@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\QueryRequest;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductDescriptionRequest;
 use App\Http\Requests\SeoRequest;
+use App\Http\Requests\StockRequest;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -60,8 +62,24 @@ class ProductController extends Controller
   public function store(
     ProductRequest $productRequest,
     ProductDescriptionRequest $productDescriptionRequest,
-    SeoRequest $seoRequest
+    SeoRequest $seoRequest,
+    StockRequest $stockRequest
   ) {
+    $product = $productRequest->safe()->all()['product'];
+    $productDescription = $productDescriptionRequest->safe()->all()['description'];
+    $productSeo = $seoRequest->safe()->all()['seo'];
+    $productStock = $stockRequest->safe()->all()['stock'];
+
+    $newProduct = DB::transaction(function () use ($product, $productDescription, $productSeo, $productStock) {
+      $newProduct = Product::create($product);
+      $newProduct->description()->createMany($productDescription);
+      $newProduct->seo()->createMany($productSeo);
+      $newProduct->stock()->createMany($productStock);
+
+      return $newProduct;
+    }, 5);
+
+    return response()->json($newProduct);
   }
 
   /**
