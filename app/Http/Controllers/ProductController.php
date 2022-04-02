@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\QueryRequest;
+use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ProductDescriptionRequest;
+use App\Http\Requests\SeoRequest;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -54,9 +57,11 @@ class ProductController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
-  {
-    //
+  public function store(
+    ProductRequest $productRequest,
+    ProductDescriptionRequest $productDescriptionRequest,
+    SeoRequest $seoRequest
+  ) {
   }
 
   /**
