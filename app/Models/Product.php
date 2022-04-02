@@ -55,6 +55,14 @@ class Product extends Model
   }
 
   /**
+   * Relacionamento com SEO
+   */
+  public function seo()
+  {
+    return $this->morphMany(Seo::class, 'searchable');
+  }
+
+  /**
    * Relacionamento com fabricante
    */
   public function manufacturer()

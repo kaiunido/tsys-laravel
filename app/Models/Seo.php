@@ -24,4 +24,12 @@ class Seo extends Model
     'query',
     'meta_url',
   ];
+
+  /**
+   * Pega a model do relacionamento searchable
+   */
+  public function searchable()
+  {
+    return $this->morthTo();
+  }
 }
