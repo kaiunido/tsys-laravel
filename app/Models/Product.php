@@ -69,4 +69,12 @@ class Product extends Model
   {
     return $this->belongsTo(StockStatus::class);
   }
+
+  /**
+   * Relacionamento com estoque
+   */
+  public function stock()
+  {
+    return $this->hasMany(Stock::class);
+  }
 }

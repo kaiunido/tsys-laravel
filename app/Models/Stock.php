@@ -22,4 +22,12 @@ class Stock extends Model
     'has_stock',
     'price',
   ];
+
+  /**
+   * Relacionamento com produto
+   */
+  public function product()
+  {
+    return $this->belongsTo(Product::class);
+  }
 }
