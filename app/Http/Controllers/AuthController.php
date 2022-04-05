@@ -28,7 +28,7 @@ class AuthController extends Controller
 
     $request->session()->regenerate();
 
-    $user = User::select("id", "name", "email")
+    $user = User::select("name", "email")
       ->where("email", $credential["email"])->first();
 
     if ($user->tokens) {
