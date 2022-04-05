@@ -80,7 +80,12 @@ class ProductController extends Controller
     $productSeo = $seoRequest->safe()->all()['seo'];
     $productStock = $stockRequest->safe()->all()['stock'];
 
-    $newProduct = DB::transaction(function () use ($product, $productDescription, $productSeo, $productStock) {
+    $newProduct = DB::transaction(function () use (
+      $product,
+      $productDescription,
+      $productSeo,
+      $productStock
+    ) {
       $newProduct = Product::create($product);
       $newProduct->description()->createMany($productDescription);
       $newProduct->seo()->createMany($productSeo);
@@ -100,7 +105,12 @@ class ProductController extends Controller
    */
   public function show($id)
   {
-    return response()->json(Product::with('description')->find($id));
+    return response()->json(
+      Product::with('description')
+        ->with('seo')
+        ->with('stock')
+        ->find($id)
+    );
   }
 
   /**
