@@ -16,7 +16,7 @@ use App\Models\Product;
 class ProductController extends Controller
 {
   /**
-   * Display a listing of the resource.
+   * Lista os produtos com ou sem parâmetros.
    *
    * @param \App\Http\Requests\QueryRequest
    * @return \Illuminate\Http\Response
@@ -77,7 +77,7 @@ class ProductController extends Controller
   }
 
   /**
-   * Store a newly created resource in storage.
+   * Salva um novo produto no banco de dados.
    *
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
