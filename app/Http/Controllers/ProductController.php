@@ -25,21 +25,34 @@ class ProductController extends Controller
   {
     $products = new Product();
     $params = $request->safe()->all();
+
     $products = $products->select(
       'products.id',
       'product_descriptions.name',
       'isbn13',
-      DB::Raw('(SELECT price FROM stocks WHERE product_id = products.id ORDER BY stocks.id DESC LIMIT 1) AS price'),
+      DB::Raw('(
+        SELECT price
+        FROM stocks
+        WHERE product_id = products.id
+        ORDER BY stocks.id
+        DESC LIMIT 1
+      ) AS price'),
       DB::Raw('(SUM(quantity) - SUM(quantity_sold)) as quantity'),
       'status'
-    )->join('product_descriptions', 'product_descriptions.product_id', 'products.id')
-      ->join('stocks', 'stocks.product_id', 'products.id');
+    )->join(
+      'product_descriptions',
+      'product_descriptions.product_id',
+      'products.id'
+    )->join('stocks', 'stocks.product_id', 'products.id');
 
-    if ($params['status'] >= 0 && $params['status'] <= 1) {
+    if (
+      isset($params['status']) &&
+      ($params['status'] >= 0 && $params['status'] <= 1)
+    ) {
       $products = $products->where('status', '=', $params['status']);
     }
 
-    if ($params['search']) {
+    if (isset($params['search'])) {
       $products = $products->where(function ($query) use ($params) {
         $query->orWhere('isbn13', 'like', "%{$params['search']}%");
         $query->orWhere('name', 'like', "%{$params['search']}%");
@@ -53,7 +66,7 @@ class ProductController extends Controller
       'status'
     );
 
-    if ($params['limit'] > 0) {
+    if (isset($params['limit']) && $params['limit'] > 0) {
       $productsResult = $products->paginate($params['limit']);
     } else {
       $productsResult = $products->get();
