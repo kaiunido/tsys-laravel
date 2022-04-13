@@ -132,9 +132,84 @@ class ProductController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(ProductRequest $productRequest, $id)
   {
-    //
+    $changedProduct = $productRequest->safe()->all()['product'];
+    $relationships = [];
+
+    // Dados
+    try {
+      $product = Product::findOrFail($id);
+    } catch (ModelNotFoundException $e) {
+      return response()->json([
+        'status' => 400,
+        'message' => "O produto de ID {$id} não foi encontrado.",
+      ], 400);
+    }
+
+    $product->fill($changedProduct['data']);
+
+    // Descrições
+    foreach ($changedProduct['descriptions'] as $value) {
+      try {
+        $description = $product->description()->where('product_id', $id)
+          ->where('language_id', $value['language_id'])->firstOrFail();
+      } catch (ModelNotFoundException $e) {
+        return response()->json([
+          'status' => 400,
+          'message' => "A descrição do idioma de ID {$value['language_id']} não foi encontrada."
+        ], 400);
+      }
+
+      $description->fill($value);
+      $relationships[] = $description;
+    }
+
+    // SEO
+    foreach ($changedProduct['seo'] as $value) {
+      try {
+        $seo = $product->seo()->where('language_id', $value['language_id'])->firstOrFail();
+      } catch (ModelNotFoundException $e) {
+        return response()->json([
+          'status' => 400,
+          'message' => "O SEO do idioma de ID {$value['language_id']} não foi encontrado."
+        ], 400);
+      }
+
+      $seo->fill($value);
+      $relationships[] = $seo;
+    }
+
+    // Stock
+    foreach ($changedProduct['stock'] as $value) {
+      try {
+        $stock = $product->stock()->where('id', $value['id'])->firstOrFail();
+      } catch (ModelNotFoundException $e) {
+        return response()->json([
+          'status' => 400,
+          'message' => "O estoque de ID {$value['id']} não foi encontrado."
+        ]);
+      }
+
+      $stock->fill($value);
+      $relationships[] = $stock;
+    }
+
+    $teste = DB::transaction(function () use ($product, $relationships) {
+      foreach ($relationships as $relationship) {
+        $relationship->save();
+      }
+
+      return $product->save();
+    }, 5);
+
+
+    return response()->json([
+      'id' => $id,
+      'result' => $teste,
+      'product' => $product,
+      'data' => $productRequest->safe()->all()
+    ]);
   }
 
   /**
