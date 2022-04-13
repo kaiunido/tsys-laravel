@@ -21,10 +21,8 @@ class SeoRequest extends FormRequest
    *
    * @return array
    */
-  public function rules()
+  public function rules($prefix = '')
   {
-    $prefix = 'seo.*.';
-
     return [
       $prefix . 'language_id' => 'required|integer',
       $prefix . 'meta_title' => 'required|string',

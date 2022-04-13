@@ -24,29 +24,43 @@ class ProductRequest extends FormRequest
   public function rules()
   {
     $prefix = 'product.';
+    $prefixData = $prefix . 'data.';
+    $prefixDesc = $prefix . 'descriptions.*.';
+    $prefixSeo = $prefix . 'seo.*.';
+    $prefixStock = $prefix . 'stock.*.';
+
     return [
-      $prefix . 'model' => 'required|string',
-      $prefix . 'sku' => 'nullable|string',
-      $prefix . 'isbn13' => 'nullable|string|size:13|unique:App\Models\Product,isbn13',
-      $prefix . 'condition' => 'required|boolean',
-      $prefix . 'location' => 'nullable|string',
-      $prefix . 'stock_status_id' => 'required|integer',
-      $prefix . 'image' => 'nullable|string|url',
-      $prefix . 'manufacturer_id' => 'required|integer',
-      $prefix . 'shipping' => 'required|boolean',
-      $prefix . 'points' => 'nullable|integer',
-      $prefix . 'date_available' => 'required|date',
-      $prefix . 'weight' => 'nullable|numeric',
-      $prefix . 'weight_id' => 'required|integer',
-      $prefix . 'length' => 'nullable|numeric',
-      $prefix . 'width' => 'nullable|numeric',
-      $prefix . 'height' => 'nullable|numeric',
-      $prefix . 'length_id' => 'required|integer',
-      $prefix . 'subtract' => 'required|boolean',
-      $prefix . 'minimum' => 'required|integer',
-      $prefix . 'sort_order' => 'required|integer',
-      $prefix . 'status' => 'required|boolean',
-      $prefix . 'viewed' => 'nullable|integer',
+      $prefix . 'data' => 'required|array',
+      $prefix . 'descriptions' => 'required|array',
+      $prefix . 'seo' => 'required|array',
+      $prefix . 'stock' => 'required|array',
+
+      $prefixData . 'model' => 'required|string',
+      $prefixData . 'sku' => 'nullable|string',
+      $prefixData . 'isbn13' => 'nullable|string|size:13|unique:App\Models\Product,isbn13',
+      $prefixData . 'condition' => 'required|boolean',
+      $prefixData . 'location' => 'nullable|string',
+      $prefixData . 'stock_status_id' => 'required|integer',
+      $prefixData . 'image' => 'nullable|string|url',
+      $prefixData . 'manufacturer_id' => 'required|integer',
+      $prefixData . 'shipping' => 'required|boolean',
+      $prefixData . 'points' => 'nullable|integer',
+      $prefixData . 'date_available' => 'required|date',
+      $prefixData . 'weight' => 'nullable|numeric',
+      $prefixData . 'weight_id' => 'required|integer',
+      $prefixData . 'length' => 'nullable|numeric',
+      $prefixData . 'width' => 'nullable|numeric',
+      $prefixData . 'height' => 'nullable|numeric',
+      $prefixData . 'length_id' => 'required|integer',
+      $prefixData . 'subtract' => 'required|boolean',
+      $prefixData . 'minimum' => 'required|integer',
+      $prefixData . 'sort_order' => 'required|integer',
+      $prefixData . 'status' => 'required|boolean',
+      $prefixData . 'viewed' => 'nullable|integer',
+
+      ...(new (ProductDescriptionRequest::class))->rules($prefixDesc),
+      ...(new (SeoRequest::class))->rules($prefixSeo),
+      ...(new (StockRequest::class))->rules($prefixStock),
     ];
   }
 }

@@ -21,11 +21,10 @@ class StockRequest extends FormRequest
    *
    * @return array
    */
-  public function rules()
+  public function rules($prefix = '')
   {
-    $prefix = 'stock.*.';
-
     return [
+      $prefix . 'id' => 'nullable|integer',
       $prefix . 'nf_id' => 'nullable|string',
       $prefix . 'product_id' => 'nullable|integer',
       $prefix . 'quantity' => 'required|integer',

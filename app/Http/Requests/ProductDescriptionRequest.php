@@ -21,10 +21,8 @@ class ProductDescriptionRequest extends FormRequest
    *
    * @return array
    */
-  public function rules()
+  public function rules($prefix = '')
   {
-    $prefix = 'description.*.';
-
     return [
       $prefix . 'language_id' => 'required|integer',
       $prefix . 'name' => 'required|string',
