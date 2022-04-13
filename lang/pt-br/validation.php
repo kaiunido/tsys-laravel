@@ -21,7 +21,7 @@ return [
   'alpha' => 'The :attribute must only contain letters.',
   'alpha_dash' => 'The :attribute must only contain letters, numbers, dashes and underscores.',
   'alpha_num' => 'The :attribute must only contain letters and numbers.',
-  'array' => 'The :attribute must be an array.',
+  'array' => 'O campo ":attribute" precisa ser um array.',
   'before' => 'The :attribute must be a date before :date.',
   'before_or_equal' => 'The :attribute must be a date before or equal to :date.',
   'between' => [
@@ -130,6 +130,8 @@ return [
   'url' => 'O campo :attribute precisa ser uma URL válida.',
   'uuid' => 'The :attribute must be a valid UUID.',
 
+  'set_all_required' => 'Por favor preencha todos os campos obrigatórios.',
+
   /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -161,8 +163,37 @@ return [
   'attributes' => [
     'password' => 'senha',
     'product' => [
-      'isbn13' => 'ISBN13'
-    ]
+      'model' => 'Modelo',
+      'condition' => 'Condição',
+      'stock_status_id' => 'Situação do Estoque',
+      'manufacturer_id' => 'Fabricante',
+      'shipping' => 'Precisa de entrega?',
+      'date_available' => 'Disponível em',
+      'weight_id' => 'Unidade de Peso',
+      'length_id' => 'Unidade de Medida',
+      'subtract' => 'Reduzir Estoque?',
+      'minimum' => 'Mínimo por Venda',
+      'sort_order' => 'Ordem',
+      'status' => 'Situação',
+      'isbn13' => 'ISBN13',
+      'descriptions' => 'Descrições',
+      'stock' => 'Estoque',
+      'seo' => "SEO",
+    ],
+    'product.descriptions.*.language_id' => 'ID do Idioma',
+    'product.descriptions.*.name' => 'Nome do Produto',
+    'product.descriptions.*.description' => 'Descrição',
+    'product.seo.*.language_id' => 'ID do Idioma',
+    'product.seo.*.meta_title' => 'Meta Título',
+    'product.seo.*.meta_url' => 'URL Amigável',
+    'product.seo.*.meta_description' => 'Meta Descrição',
+    'product.seo.*.meta_tags' => 'Meta Tags',
+    'product.stock.*.nf_id' => 'ID da Nota Fiscal',
+    'product.stock.*.product_id' => 'ID do Produto',
+    'product.stock.*.quantity' => 'Quantidade',
+    'product.stock.*.quantity_sold' => 'Quantidade Vendida',
+    'product.stock.*.has_stock' => 'Tem estoque?',
+    'product.stock.*.price' => 'Preço',
   ],
 
 ];
