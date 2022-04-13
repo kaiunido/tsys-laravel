@@ -78,32 +78,32 @@ class ProductController extends Controller
    * @param  \App\Http\Requests\ProductRequest  $productRequest
    * @return \Illuminate\Http\Response
    */
-  public function store(
-    ProductRequest $productRequest,
-    ProductDescriptionRequest $productDescriptionRequest,
-    SeoRequest $seoRequest,
-    StockRequest $stockRequest
-  ) {
+  public function store(ProductRequest $productRequest)
+  {
     $product = $productRequest->safe()->all()['product'];
-    $productDescription = $productDescriptionRequest->safe()->all()['description'];
-    $productSeo = $seoRequest->safe()->all()['seo'];
-    $productStock = $stockRequest->safe()->all()['stock'];
 
-    $newProduct = DB::transaction(function () use (
-      $product,
-      $productDescription,
-      $productSeo,
-      $productStock
+    if (
+      !isset($product['data']) ||
+      !isset($product['descriptions']) ||
+      !isset($product['seo']) ||
+      !isset($product['stock'])
     ) {
-      $newProduct = Product::create($product);
-      $newProduct->description()->createMany($productDescription);
-      $newProduct->seo()->createMany($productSeo);
-      $newProduct->stock()->createMany($productStock);
+      return response()->json([
+        'status' => 500,
+        'message' => __('validation.set_all_required')
+      ], 500);
+    }
+
+    $newProduct = DB::transaction(function () use ($product) {
+      $newProduct = Product::create($product['data']);
+      $newProduct->description()->createMany($product['descriptions']);
+      $newProduct->seo()->createMany($product['seo']);
+      $newProduct->stock()->createMany($product['stock']);
 
       return $newProduct;
     }, 5);
 
-    return response()->json($newProduct);
+    return response()->json($newProduct->id);
   }
 
   /**
