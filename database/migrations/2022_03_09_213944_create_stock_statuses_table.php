@@ -13,17 +13,12 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('seo', function (Blueprint $table) {
-      $table->id('seo_id');
-      $table->string('type');
-      $table->foreignId('foreign_id');
+    Schema::create('stock_statuses', function (Blueprint $table) {
+      $table->id();
       $table->foreignId('language_id');
-      $table->string('meta_title');
-      $table->string('meta_description');
-      $table->string('meta_tags');
-      $table->string('query');
-      $table->string('meta_url');
+      $table->string('name');
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 
@@ -34,6 +29,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('seo');
+    Schema::dropIfExists('stock_statuses');
   }
 };

@@ -14,9 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
-Route::prefix('product')->group(function () {
-  Route::get('oc-url-seo', [App\Http\Controllers\ecommerce\ProductController::class, 'ocConvertNameToFriendlyUrl']);
+Route::controller(App\Http\Controllers\AuthController::class)->group(function () {
+  Route::post("usuario/login", "login");
 });
+
+/*Route::prefix('product')->group(function () {
+  Route::get('oc-url-seo', [App\Http\Controllers\ecommerce\ProductController::class, 'ocConvertNameToFriendlyUrl']);
+});*/

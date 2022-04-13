@@ -13,16 +13,16 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('product_descriptions', function (Blueprint $table) {
+    Schema::create('stocks', function (Blueprint $table) {
       $table->id();
+      $table->foreignId('nf_id')->nullable();
       $table->foreignId('product_id');
-      $table->foreignId('language_id');
-      $table->string('name');
-      $table->text('description')->nullable();
+      $table->integer('quantity')->default(1);
+      $table->integer('quantity_sold')->default(0);
+      $table->boolean('has_stock')->default(1);
+      $table->decimal('price', 15, 4)->default(0.0000);
       $table->timestamps();
       $table->softDeletes();
-
-      $table->unique(['product_id', 'language_id']);
     });
   }
 
@@ -33,6 +33,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('product_descriptions');
+    Schema::dropIfExists('stocks');
   }
 };
