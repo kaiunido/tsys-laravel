@@ -75,7 +75,7 @@ class ProductController extends Controller
   /**
    * Salva um novo produto no banco de dados.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Http\Requests\ProductRequest  $productRequest
    * @return \Illuminate\Http\Response
    */
   public function store(
@@ -107,7 +107,7 @@ class ProductController extends Controller
   }
 
   /**
-   * Display the specified resource.
+   * Retorna um produto pelo ID
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
@@ -123,9 +123,12 @@ class ProductController extends Controller
   }
 
   /**
-   * Update the specified resource in storage.
+   * Atualiza um produto no banco de dados.
+   * 
+   * //TODO: fazer com que ele crie as novas descrições, seos e estoque.
+   * Por enquanto ele apenas salva as já existentes.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Http\Requests\ProductRequest  $productRequest
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
@@ -135,7 +138,9 @@ class ProductController extends Controller
   }
 
   /**
-   * Remove the specified resource from storage.
+   * Remove um produto do banco de dados utilizando o soft delete.
+   * Se o parâmetro "$force" for verdadeiro, o item será removido
+   * completamente do banco de dados.
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
