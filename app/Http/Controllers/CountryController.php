@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CountryRequest;
+use App\Models\Country;
+
 class CountryController extends Controller
 {
   /**
@@ -23,6 +26,21 @@ class CountryController extends Controller
    */
   public function store(CountryRequest $request)
   {
+    try {
+      $country = DB::transaction(function () use ($request) {
+        return Country::create($request->safe()->all()['country']);
+      }, 5);
+
+      return response()->json([
+        'status' => 200,
+        'data' => ['id' => $country->id]
+      ], 200);
+    } catch (\Exception $e) {
+      return response()->json([
+        'status' => 500,
+        'message' => __('general.unknown_error'),
+      ], 500);
+    }
   }
 
   /**
