@@ -162,6 +162,13 @@ return [
 
   'attributes' => [
     'password' => 'senha',
+
+    'country' => [
+      'name' => 'Nome',
+      'alfa2' => 'Alfa 2',
+      'alfa3' => 'Alfa 3',
+    ],
+
     'product' => [
       'model' => 'Modelo',
       'condition' => 'Condição',
