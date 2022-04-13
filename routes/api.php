@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/usuario', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
   Route::group(['prefix' => 'consulta'], function () {
+    Route::apiResource('paises', App\Http\Controllers\CountryController::class);
     Route::apiResource('produtos', App\Http\Controllers\ProductController::class);
   });
 });
