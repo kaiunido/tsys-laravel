@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\QueryRequest;
 use App\Http\Requests\ProductRequest;
-use App\Http\Requests\ProductDescriptionRequest;
-use App\Http\Requests\SeoRequest;
-use App\Http\Requests\StockRequest;
 use App\Models\Product;
 
 class ProductController extends Controller
