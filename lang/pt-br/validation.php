@@ -125,7 +125,7 @@ return [
   'starts_with' => 'The :attribute must start with one of the following: :values.',
   'string' => 'O campo :attribute precisa ser do tipo texto.',
   'timezone' => 'The :attribute must be a valid timezone.',
-  'unique' => 'O :attribute já está sendo usado.',
+  'unique' => 'O valor do campo ":attribute" já está sendo usado.',
   'uploaded' => 'The :attribute failed to upload.',
   'url' => 'O campo :attribute precisa ser uma URL válida.',
   'uuid' => 'The :attribute must be a valid UUID.',
