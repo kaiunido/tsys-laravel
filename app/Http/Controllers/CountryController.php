@@ -65,7 +65,7 @@ class CountryController extends Controller
         } catch (ModelNotFoundException) {
             return response()->json([
                 'status' => 400,
-                'message' => 'Não foi possível encontrar um país com o ID ' . $id . '.'
+                'message' => __('country.not_found', ['id' => $id])
             ], 400);
         }
     }
