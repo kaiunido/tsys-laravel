@@ -12,18 +12,18 @@ use App\Models\Country;
 
 class CountryController extends Controller
 {
-  /**
-   * Retorna uma lista de países de acordo com os parâmetros.
-   *
-   * @return JsonResponse
-   */
-  public function index(): JsonResponse
-  {
-    return response()->json(Country::all());
-  }
+    /**
+     * Retorna uma lista de países conforme os parâmetros.
+     *
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
+    {
+        return response()->json(Country::all());
+    }
 
-  /**
-   * Cria um novo país no banco de dados.
+    /**
+   * Cria um país no banco de dados.
    *
    * @param CountryRequest $request
    * @return JsonResponse
@@ -47,7 +47,7 @@ class CountryController extends Controller
     }
   }
 
-  /**
+    /**
    * Retorna um país pelo ID.
    *
    * @param int $id
@@ -83,7 +83,7 @@ class CountryController extends Controller
   }
 
   /**
-   * Faz o soft delete de um país ou remove completamente ao utilizar o
+   * Faz o soft-delete de um país ou remove completamente ao utilizar o
    * parâmetro "$force" como verdadeiro.
    *
    * @param int $id

@@ -17,7 +17,7 @@ class CountryRequest extends FormRequest
   }
 
   /**
-   * Get the validation rules that apply to the request.
+   * Retorna as regras de validação que se aplicam à solicitação.
    *
    * @return array
    */
