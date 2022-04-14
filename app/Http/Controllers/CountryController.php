@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Throwable;
 use App\Http\Requests\CountryRequest;
 use App\Models\Country;
 
@@ -13,9 +15,9 @@ class CountryController extends Controller
   /**
    * Retorna uma lista de países de acordo com os parâmetros.
    *
-   * @return \Illuminate\Http\Response
+   * @return JsonResponse
    */
-  public function index()
+  public function index(): JsonResponse
   {
     return response()->json(Country::all());
   }
@@ -23,21 +25,21 @@ class CountryController extends Controller
   /**
    * Cria um novo país no banco de dados.
    *
-   * @param  \App\Http\Requests\CountryRequest  $request
-   * @return \Illuminate\Http\Response
+   * @param CountryRequest $request
+   * @return JsonResponse
    */
-  public function store(CountryRequest $request)
+  public function store(CountryRequest $request): JsonResponse
   {
     try {
       $country = DB::transaction(function () use ($request) {
-        return Country::create($request->safe()->all()['country']);
+        return (new Country)->create($request->safe()->all()['country']);
       }, 5);
 
       return response()->json([
         'status' => 200,
         'data' => ['id' => $country->id]
-      ], 200);
-    } catch (\Exception $e) {
+      ]);
+    } catch (Throwable) {
       return response()->json([
         'status' => 500,
         'message' => __('general.unknown_error'),
@@ -48,19 +50,19 @@ class CountryController extends Controller
   /**
    * Retorna um país pelo ID.
    *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
+   * @param int $id
+   * @return JsonResponse
    */
-  public function show($id)
+  public function show(int $id): JsonResponse
   {
     try {
-      $country = Country::findOrFail($id);
+      $country = (new Country)->findOrFail($id);
 
       return response()->json([
         'status' => 200,
         'data' => $country
-      ], 200);
-    } catch (ModelNotFoundException $e) {
+      ]);
+    } catch (ModelNotFoundException) {
       return response()->json([
         'status' => 400,
         'message' => 'Não foi possível encontrar um país com o ID ' . $id . '.'
@@ -71,11 +73,11 @@ class CountryController extends Controller
   /**
    * Atualiza um país existente no banco de dados através do ID.
    *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
+   * @param Request $request
+   * @param int $id
+   * @return void
    */
-  public function update(Request $request, $id)
+  public function update(Request $request, int $id)
   {
     //
   }
@@ -84,10 +86,10 @@ class CountryController extends Controller
    * Faz o soft delete de um país ou remove completamente ao utilizar o
    * parâmetro "$force" como verdadeiro.
    *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
+   * @param int $id
+   * @return void
    */
-  public function destroy($id)
+  public function destroy(int $id)
   {
     //
   }
