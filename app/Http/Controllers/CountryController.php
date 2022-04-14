@@ -32,7 +32,7 @@ class CountryController extends Controller
   {
     try {
       $country = DB::transaction(function () use ($request) {
-        return (new Country)->create($request->safe()->all()['country']);
+        return Country::create($request->safe()->all()['country']);
       }, 5);
 
       return response()->json([
