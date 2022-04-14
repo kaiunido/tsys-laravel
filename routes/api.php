@@ -15,12 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/usuario', function (Request $request) {
-  return $request->user()->only(['name', 'email']);
+    return $request->user()->only(['name', 'email']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-  Route::group(['prefix' => 'consulta'], function () {
-    Route::apiResource('paises', App\Http\Controllers\CountryController::class);
-    Route::apiResource('produtos', App\Http\Controllers\ProductController::class);
-  });
+    Route::apiResource('paises', App\Http\Controllers\CountryController::class)
+        ->parameters(['paises' => 'country'])
+        ->names('country');
+
+    Route::apiResource('produtos', App\Http\Controllers\ProductController::class)
+        ->parameters(['produtos' => 'product'])
+        ->names('product');
 });
