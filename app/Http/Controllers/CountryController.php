@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Throwable;
@@ -110,10 +109,37 @@ class CountryController extends Controller
      * parâmetro "$force" como verdadeiro.
      *
      * @param int $id
-     * @return void
+     * @param bool $force
+     * @return JsonResponse
      */
-    public function destroy(int $id)
+    public function destroy(int $id, bool $force = false): JsonResponse
     {
-        //
+        try {
+            $country = Country::findOrFail($id);
+
+            $countryDeleted = DB::transaction(function () use ($country, $force) {
+                if (!$force) {
+                    return $country->delete();
+                } else {
+                    return $country->forceDelete();
+                }
+            });
+
+            return response()->json([
+                'status' => 200,
+                'message' => __('country.deleted', ['id' => $id]),
+                'data' => $countryDeleted
+            ]);
+        } catch (ModelNotFoundException) {
+            return response()->json([
+                'status' => 400,
+                'message' => __('country.not_found', ['id' => $id])
+            ], 400);
+        } catch (Throwable) {
+            return response()->json([
+                'status' => 500,
+                'message' => __('general.unknown_error')
+            ], 500);
+        }
     }
 }
