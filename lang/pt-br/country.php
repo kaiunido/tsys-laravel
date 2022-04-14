@@ -13,6 +13,7 @@ return [
     |
     */
 
+    'updated' => 'O país de ID :id foi atualizado.',
     'deleted' => 'O país de ID :id foi removido.',
     'not_found' => 'O país de ID :id não foi encontrado.'
 

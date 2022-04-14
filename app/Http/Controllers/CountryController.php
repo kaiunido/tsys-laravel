@@ -73,13 +73,36 @@ class CountryController extends Controller
     /**
      * Atualiza um país existente no banco de dados através do ID.
      *
-     * @param Request $request
+     * @param CountryRequest $request
      * @param int $id
-     * @return void
+     * @return JsonResponse
      */
-    public function update(Request $request, int $id)
+    public function update(CountryRequest $request, int $id): JsonResponse
     {
-        //
+        try {
+            $country = Country::findOrFail($id);
+            $country->fill($request['country']);
+
+            $savedCountry = DB::transaction(function () use ($country) {
+                return $country->save();
+            });
+
+            return response()->json([
+                'status' => 200,
+                'message' => __('country.updated', ['id' => $id]),
+                'data' => $savedCountry,
+            ]);
+        } catch (ModelNotFoundException) {
+            return response()->json([
+                'status' => 400,
+                'message' => __('country.not_found', ['id' => $id]),
+            ], 400);
+        } catch (Throwable) {
+            return response()->json([
+                'status' => 500,
+                'message' => __('general.unknown_error'),
+            ], 500);
+        }
     }
 
     /**
