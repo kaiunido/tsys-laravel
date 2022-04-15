@@ -169,6 +169,13 @@ return [
       'alfa3' => 'Alfa 3',
     ],
 
+    'language' => [
+      'name' => 'Nome',
+      'code' => 'Código',
+      'locale' => 'Localização',
+      'image' => 'Imagem',
+    ],
+
     'product' => [
       'model' => 'Modelo',
       'condition' => 'Condição',
