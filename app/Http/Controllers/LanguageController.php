@@ -58,7 +58,7 @@ class LanguageController extends Controller
         } catch (ModelNotFoundException) {
             return response()->json([
                 'status' => 400,
-                'message' => "O idioma de ID {$id} não foi encontrado.",
+                'message' => __('language.not_found', ['id' => $id]),
             ], 400);
         } catch (Throwable) {
             return response()->json([
