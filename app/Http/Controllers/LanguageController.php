@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\LanguageRequest;
+use App\Models\Language;
 
 class LanguageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Retorna todos os idiomas
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $languages = Language::all();
+
+        return response()->json($languages);
     }
 
     /**
