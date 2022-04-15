@@ -16,8 +16,8 @@ return new class extends Migration
     Schema::create('languages', function (Blueprint $table) {
       $table->id();
       $table->string('name', 32);
-      $table->string('code', 5)->unique();
-      $table->string('locale');
+      $table->string('code', 5);
+      $table->string('locale')->nullable();
       $table->string('image')->nullable();
       $table->timestamps();
       $table->softDeletes();
