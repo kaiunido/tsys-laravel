@@ -46,7 +46,7 @@ return [
   'email' => 'Por favor preencha um endereço de e-mail válido.',
   'ends_with' => 'The :attribute must end with one of the following: :values.',
   'enum' => 'The selected :attribute is invalid.',
-  'exists' => 'The selected :attribute is invalid.',
+  'exists' => 'O :attribute selecionado é invalido.',
   'file' => 'The :attribute must be a file.',
   'filled' => 'The :attribute field must have a value.',
   'gt' => [
@@ -174,6 +174,11 @@ return [
       'code' => 'Código',
       'locale' => 'Localização',
       'image' => 'Imagem',
+    ],
+
+    'stock_status' => [
+      'language_id' => 'Idioma',
+      'name' => 'Nome',
     ],
 
     'product' => [
