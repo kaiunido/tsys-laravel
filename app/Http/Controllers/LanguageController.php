@@ -24,7 +24,7 @@ class LanguageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Cadastra um novo idioma no banco de dados.
      *
      * @param  LanguageRequest  $request
      * @return \Illuminate\Http\Response
@@ -115,7 +115,8 @@ class LanguageController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Faz o "soft-delete" de um idioma ou remove completamente ao utilizar o
+     * parâmetro "$force" como verdadeiro.
      *
      * @param  int  $id
      * @param  bool $force
