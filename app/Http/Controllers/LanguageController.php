@@ -77,7 +77,7 @@ class LanguageController extends Controller
      */
     public function update(LanguageRequest $request, int $id): JsonResponse
     {
-        if (!$request->safe()->all() && !$request->safe()->all()) {
+        if (!$request->safe()->all()['language']) {
             return response()->json([
                 'status' => 400,
                 'message' => __('general.no_data'),
