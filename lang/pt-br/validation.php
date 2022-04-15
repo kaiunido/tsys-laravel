@@ -83,10 +83,10 @@ return [
   ],
   'mac_address' => 'The :attribute must be a valid MAC address.',
   'max' => [
-    'array' => 'The :attribute must not have more than :max items.',
-    'file' => 'The :attribute must not be greater than :max kilobytes.',
-    'numeric' => 'The :attribute must not be greater than :max.',
-    'string' => 'The :attribute must not be greater than :max characters.',
+    'array' => 'O campo :attribute não pode ter mais que :max itens.',
+    'file' => 'O arquivo no campo :attribute não pode ser maior que :max kilobytes.',
+    'numeric' => 'O campo :attribute não pode ser maior que :max.',
+    'string' => 'O campo :attribute não pode ser maior que :max caracteres.',
   ],
   'mimes' => 'The :attribute must be a file of type: :values.',
   'mimetypes' => 'The :attribute must be a file of type: :values.',
@@ -167,6 +167,13 @@ return [
       'name' => 'Nome',
       'alfa2' => 'Alfa 2',
       'alfa3' => 'Alfa 3',
+    ],
+
+    'language' => [
+      'name' => 'Nome',
+      'code' => 'Código',
+      'locale' => 'Localização',
+      'image' => 'Imagem',
     ],
 
     'product' => [

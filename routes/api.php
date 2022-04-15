@@ -23,6 +23,10 @@ Route::middleware('auth:sanctum')->group(function () {
         ->parameters(['paises' => 'country'])
         ->names('country');
 
+    Route::apiResource('idiomas', App\Http\Controllers\LanguageController::class)
+        ->parameters(['idiomas' => 'language'])
+        ->names('language');
+
     Route::apiResource('produtos', App\Http\Controllers\ProductController::class)
         ->parameters(['produtos' => 'product'])
         ->names('product');
