@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\LanguageRequest;
 use App\Models\Language;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Throwable;
 
 class LanguageController extends Controller
@@ -69,15 +69,49 @@ class LanguageController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Atualiza um idioma no banco de dados.
      *
      * @param  LanguageRequest  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function update(LanguageRequest $request, $id)
+    public function update(LanguageRequest $request, int $id): JsonResponse
     {
-        //
+        if (!$request->safe()->all() && !$request->safe()->all()) {
+            return response()->json([
+                'status' => 400,
+                'message' => __('general.no_data'),
+            ]);
+        }
+
+        try {
+            $language = Language::findOrFail($id);
+
+            $language->fill($request->safe()->all()['language']);
+            $status = $language->save();
+
+            if ($status) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => __('language.updated', ['id' => $id]),
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 500,
+                    'message' => 'general.unknown_error'
+                ], 500);
+            }
+        } catch (ModelNotFoundException) {
+            return response()->json([
+                'status' => 400,
+                'message' => __('language.not_found'),
+            ], 400);
+        } catch (Throwable) {
+            return response()->json([
+                'status' => 500,
+                'message' => __('general.unknown_error'),
+            ], 500);
+        }
     }
 
     /**
