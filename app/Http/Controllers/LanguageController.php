@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Requests\LanguageRequest;
 use App\Models\Language;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class LanguageController extends Controller
@@ -83,10 +84,43 @@ class LanguageController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  bool $force
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(int $id, $force = false): JsonResponse
     {
-        //
+        try {
+            $language = Language::findOrFail($id);
+
+            $status = DB::transaction(function () use ($language, $force) {
+                if ($force) {
+                    return $language->forceDelete();
+                } else {
+                    return $language->delete();
+                }
+            }, 5);
+
+            if ($status) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => __('language.deleted', ['id' => $id]),
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 500,
+                    'message' => __('general.unknown_error'),
+                ], 500);
+            }
+        } catch (ModelNotFoundException) {
+            return response()->json([
+                'status' => 400,
+                'message' => __('language.not_found', ['id' => $id]),
+            ], 400);
+        } catch (Throwable) {
+            return response()->json([
+                'status' => 500,
+                'message' => __('general.unknown_error'),
+            ], 500);
+        }
     }
 }
