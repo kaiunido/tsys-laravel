@@ -30,7 +30,16 @@ class LanguageController extends Controller
      */
     public function store(LanguageRequest $request)
     {
-        //
+        try {
+            $language = Language::create($request->safe()->all()['language']);
+
+            return response()->json($language->id);
+        } catch (Throwable) {
+            return response()->json([
+                'status' => 500,
+                'message' => __('general.unknown_error'),
+            ], 500);
+        }
     }
 
     /**
