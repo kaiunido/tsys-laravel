@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\LanguageRequest;
 use App\Models\Language;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Throwable;
 
 class LanguageController extends Controller
 {
@@ -32,14 +34,28 @@ class LanguageController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Retorna um idioma de acordo com o ID.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(int $id): JsonResponse
     {
-        //
+        try {
+            $language = Language::findOrFail($id);
+
+            return response()->json($language);
+        } catch (ModelNotFoundException) {
+            return response()->json([
+                'status' => 400,
+                'message' => "O idioma de ID {$id} não foi encontrado.",
+            ], 400);
+        } catch (Throwable) {
+            return response()->json([
+                'status' => 500,
+                'message' => __('general.unknown_error'),
+            ], 500);
+        }
     }
 
     /**
