@@ -27,6 +27,10 @@ Route::middleware('auth:sanctum')->group(function () {
         ->parameters(['idiomas' => 'language'])
         ->names('language');
 
+    Route::apiResource('situacao-estoque', App\Http\Controllers\StockStatusController::class)
+        ->parameters(['situacao-estoque' => 'stockStatus'])
+        ->names('stockStatus');
+
     Route::apiResource('produtos', App\Http\Controllers\ProductController::class)
         ->parameters(['produtos' => 'product'])
         ->names('product');
