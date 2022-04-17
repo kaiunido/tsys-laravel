@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\StockStatus;
+use stdClass;
+use Throwable;
 
 class StockStatusRequest extends FormRequest
 {
@@ -71,12 +74,10 @@ class StockStatusRequest extends FormRequest
      */
     private function updateRules(): array
     {
-        //TODO: Pegar a language_id na model pois se a mesma não for enviada é pesquisada como NULL
-        // na query:
-        // select count(*) as aggregate from `stock_statuses` where `name` = 'Encomenda' and `id` <> '4' and `language_id` is null
+        $stockStatus = $this->getStockStatus($this->route('stockStatus'));
         $data = $this->request->all('stock_status');
-        $name = isset($data['name']) ? $data['name'] : 'NULL';
-        $languageId = isset($data['language_id']) ? $data['language_id'] : 'NULL';
+        $name = isset($data['name']) ? $data['name'] : $stockStatus->name;
+        $languageId = isset($data['language_id']) ? $data['language_id'] : $stockStatus->language_id;
 
         $rules = [
             'language_id' => [
@@ -94,5 +95,20 @@ class StockStatusRequest extends FormRequest
             'stock_status.language_id' => implode('|', $rules['language_id']),
             'stock_status.name' => implode('|', $rules['name']),
         ];
+    }
+
+    /**
+     * Retorna a situação de estoque pelo ID.
+     * 
+     * @param int  $id
+     * @return StockStatus|stdClass
+     */
+    private function getStockStatus(int $id): StockStatus|stdClass
+    {
+        try {
+            return StockStatus::select('language_id', 'name')->findOrFail($id);
+        } catch (Throwable) {
+            return new stdClass(['language_id' => null, 'name' => null]);
+        }
     }
 }
