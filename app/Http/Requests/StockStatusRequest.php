@@ -11,10 +11,10 @@ class StockStatusRequest extends FormRequest
 {
     /**
      * Tabela ou Model das Situações de Estoque.
-     * 
-     * @var
+     *
+     * @var string
      */
-    private $table = 'App\Models\StockStatus';
+    private string $table = 'App\Models\StockStatus';
 
     /**
      * Determina se o usuário está autorizado a fazer o request.
@@ -38,26 +38,26 @@ class StockStatusRequest extends FormRequest
 
     /**
      * Retorna as regras de validação que serão aplicadas no store.
-     * 
+     *
      * @return array
      */
     private function storeRules(): array
     {
         $data = $this->request->all('stock_status');
-        $name = isset($data['name']) ? $data['name'] : 'NULL';
-        $languageId = isset($data['language_id']) ? $data['language_id'] : 'NULL';
+        $name = $data['name'] ?? 'NULL';
+        $languageId = $data['language_id'] ?? 'NULL';
 
         $rules = [
             'language_id' => [
                 'required',
                 'integer',
-                "unique:{$this->table},language_id,NULL,NULL,name,{$name},deleted_at,NULL",
+                "unique:$this->table,language_id,NULL,NULL,name,$name,deleted_at,NULL",
                 'exists:App\Models\Language,id,deleted_at,NULL'
             ],
             'name' => [
                 'required',
                 'string',
-                "unique:{$this->table},name,NULL,NULL,language_id,{$languageId},deleted_at,NULL",
+                "unique:$this->table,name,NULL,NULL,language_id,$languageId,deleted_at,NULL",
             ],
         ];
 
@@ -69,25 +69,25 @@ class StockStatusRequest extends FormRequest
 
     /**
      * Retorna as regras de validação que serão aplicadas no update.
-     * 
+     *
      * @return array
      */
     private function updateRules(): array
     {
         $stockStatus = $this->getStockStatus($this->route('stockStatus'));
         $data = $this->request->all('stock_status');
-        $name = isset($data['name']) ? $data['name'] : $stockStatus->name;
-        $languageId = isset($data['language_id']) ? $data['language_id'] : $stockStatus->language_id;
+        $name = $data['name'] ?? $stockStatus->name;
+        $languageId = $data['language_id'] ?? $stockStatus->language_id;
 
         $rules = [
             'language_id' => [
                 'integer',
-                "unique:{$this->table},language_id,{$this->route('stockStatus')},id,name,{$name}",
+                "unique:$this->table,language_id,{$this->route('stockStatus')},id,name,$name",
                 'exists:App\Models\Language,id,deleted_at,NULL'
             ],
             'name' => [
                 'string',
-                "unique:{$this->table},name,{$this->route('stockStatus')},id,language_id,{$languageId}",
+                "unique:$this->table,name,{$this->route('stockStatus')},id,language_id,$languageId",
             ],
         ];
 
@@ -99,8 +99,8 @@ class StockStatusRequest extends FormRequest
 
     /**
      * Retorna a situação de estoque pelo ID.
-     * 
-     * @param int  $id
+     *
+     * @param int $id
      * @return StockStatus|stdClass
      */
     private function getStockStatus(int $id): StockStatus|stdClass
@@ -108,7 +108,7 @@ class StockStatusRequest extends FormRequest
         try {
             return StockStatus::select('language_id', 'name')->findOrFail($id);
         } catch (Throwable) {
-            return new stdClass(['language_id' => null, 'name' => null]);
+            return new stdClass();
         }
     }
 }
