@@ -14,7 +14,11 @@ return new class extends Migration
   public function up()
   {
     Schema::create('length_descriptions', function (Blueprint $table) {
-      $table->foreignId('length_id');
+      $table->id();
+      $table->foreignId('length_id')
+        ->constrained()
+        ->cascadeOnUpdate()
+        ->cascadeOnDelete();
       $table->foreignId('language_id');
       $table->string('name');
       $table->string('unit', 3);
