@@ -13,7 +13,7 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('lengths_descriptions', function (Blueprint $table) {
+    Schema::create('length_descriptions', function (Blueprint $table) {
       $table->foreignId('length_id');
       $table->foreignId('language_id');
       $table->string('name');
@@ -32,6 +32,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('lengths_descriptions');
+    Schema::dropIfExists('length_descriptions');
   }
 };
