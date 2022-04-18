@@ -22,7 +22,7 @@ class Length extends Model
   /**
    * Relacionamento com a descrição da unidade de medida
    */
-  public function description()
+  public function descriptions()
   {
     return $this->hasMany(LengthDescription::class);
   }
