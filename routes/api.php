@@ -31,6 +31,10 @@ Route::middleware('auth:sanctum')->group(function () {
         ->parameters(['situacao-estoque' => 'stockStatus'])
         ->names('stockStatus');
 
+    Route::apiResource('unidade-medida', App\Http\Controllers\LengthController::class)
+        ->parameters(['unidade-medida' => 'length'])
+        ->names('length');
+
     Route::apiResource('produtos', App\Http\Controllers\ProductController::class)
         ->parameters(['produtos' => 'product'])
         ->names('product');

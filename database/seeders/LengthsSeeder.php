@@ -38,7 +38,7 @@ class LengthsSeeder extends Seeder
         'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
       ]);
 
-      DB::table('lengths_descriptions')->insert([
+      DB::table('length_descriptions')->insert([
         'length_id' => $id,
         'language_id' => $language->id,
         'name' => $value['name'],
