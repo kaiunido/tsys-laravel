@@ -34,6 +34,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('unidade-medida', App\Http\Controllers\LengthController::class)
         ->parameters(['unidade-medida' => 'length'])
         ->names('length');
+    
+    Route::apiResource('unidade-peso', App\Http\Controllers\WeightController::class)
+        ->parameters(['unidade-peso' => 'weight'])
+        ->names('weight');
 
     Route::apiResource('produtos', App\Http\Controllers\ProductController::class)
         ->parameters(['produtos' => 'product'])
